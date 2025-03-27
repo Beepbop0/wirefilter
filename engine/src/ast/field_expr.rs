@@ -452,7 +452,7 @@ impl<'s> Expr<'s> for ComparisonExpr<'s> {
                 }
 
                 match op {
-                    OrderingOp::NotEqual => gen_ordering!(!=, true),
+                    OrderingOp::NotEqual => gen_ordering!(!=, false),
                     OrderingOp::Equal => gen_ordering!(==, false),
                     OrderingOp::GreaterThanEqual => gen_ordering!(>=, false),
                     OrderingOp::LessThanEqual => gen_ordering!(<=, false),
@@ -1641,7 +1641,7 @@ mod tests {
 
         ctx.set_field_value(field("http.cookies"), Array::new(Type::Bytes))
             .unwrap();
-        assert_eq!(expr.execute_one(ctx), true);
+        assert_eq!(expr.execute_one(ctx), false);
     }
 
     #[test]
@@ -1713,7 +1713,7 @@ mod tests {
 
         ctx.set_field_value(field("http.headers"), Map::new(Type::Bytes))
             .unwrap();
-        assert_eq!(expr.execute_one(ctx), true);
+        assert_eq!(expr.execute_one(ctx), false);
     }
 
     #[test]
